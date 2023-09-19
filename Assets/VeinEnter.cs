@@ -10,62 +10,50 @@ namespace HurricaneVR.Framework.Core.Stabbing
     {
 
         public Material enteredMaterial;
-        public GameObject topCube; 
-        //public GameObject bottomCube; 
-       
-        private Material defaultMaterial;
-        private HapticSurface topCubeSurface; 
-        private HapticSurface bottomCubeSurface;
-        private bool inVein; 
-
+        public  Material defaultMaterial;
+        public string MaskedLayer; 
+        public GameObject HallowTube;
+        private int layerMsk;
 
         private void Awake()
         {
-            topCubeSurface.tag = "Touchable";
-            inVein = false; 
+            layerMsk = LayerMask.NameToLayer(MaskedLayer);
         }
 
-        private void Update()
+        private void OnCollisionEnter(Collision collision)
         {
-            if(inVein)
+            var layermask = collision.gameObject.layer; 
+            if(collision.gameObject.tag == "Touchable" && layermask == layerMsk)
             {
-                topCube.tag = "Touchable";
-            }
-            else
-            {
-                topCube.tag = "Untagged";
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.name.Contains("Stylus"))
-            {
-                inVein = true;
-                gameObject.GetComponent<MeshRenderer>().material = enteredMaterial;
-                topCubeSurface.hlStiffness = 0.5f; topCubeSurface.hlDamping = 0.9f; topCubeSurface.hlStaticFriction = 0.2f; topCubeSurface.hlDynamicFriction = 0.2f;
-               // bottomCubeSurface.hlStiffness = 0.5f; bottomCubeSurface.hlDamping = 0.9f; bottomCubeSurface.hlStaticFriction = 0.2f; bottomCubeSurface.hlDynamicFriction = 0.2f;
-                topCube.tag = "Untagged";
-                //bottomCube.tag = "Touchable";
-
-            }
-            else
-            {
-                print(other.name);
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-                if (other.name.Contains("Stylus"))
+                collision.gameObject.GetComponent<MeshRenderer>().material = enteredMaterial;
+                if(HallowTube != null )
                 {
-                inVein = false; 
-                topCubeSurface.hlStiffness = 0f; topCubeSurface.hlDamping = 0f; topCubeSurface.hlStaticFriction = 0f; topCubeSurface.hlDynamicFriction = 0f;
-                //bottomCubeSurface.hlStiffness = 0f; bottomCubeSurface.hlDamping = 0f; bottomCubeSurface.hlStaticFriction = 0f; bottomCubeSurface.hlDynamicFriction = 0f;
-                gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
-                topCube.tag = "Untagged";
-                //bottomCube.tag = "Default";
+                    HallowTube.GetComponent<HallowTube_Manager>().AlignToVein(collision.contacts[0], collision.transform);
+                    //HallowTube.transform.parent = null;
+                    //HallowTube.transform.SetParent(collision.gameObject.transform, true);
+                }
 
+            }
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.tag == "Touchable")
+            {
+                if(defaultMaterial != null)
+                {
+                    collision.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+                }
+                if (HallowTube != null)
+                {
+                    //HallowTube.transform.parent = null;
+                    //HallowTube.transform.SetParent(gameObject.transform, true);
+                }
+
+            }
+            else
+            {
+                print(collision.gameObject.tag);
             }
         }
 
