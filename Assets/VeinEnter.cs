@@ -14,6 +14,7 @@ namespace HurricaneVR.Framework.Core.Stabbing
         public string MaskedLayer; 
         public GameObject HallowTube;
         private int layerMsk;
+       
 
         private void Awake()
         {
@@ -53,7 +54,7 @@ namespace HurricaneVR.Framework.Core.Stabbing
             }
             else
             {
-                print(collision.gameObject.tag);
+               // print(collision.gameObject.tag);
             }
         }
 
