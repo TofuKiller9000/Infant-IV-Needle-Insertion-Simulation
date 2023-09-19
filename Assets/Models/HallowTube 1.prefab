@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7558079380693816773}
+  - component: {fileID: 5532594449599342421}
   m_Layer: 0
   m_Name: HallowTube 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_TagString: Touchable
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -25,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1443762564461140829}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.07, y: 1.07, z: 1.07}
+  m_LocalScale: {x: 1.864796, y: 1.864796, z: 1.864796}
   m_Children:
   - {fileID: 8868552987627225889}
   - {fileID: 247135107288483394}
@@ -33,6 +34,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5532594449599342421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443762564461140829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40ca0a536df1e24bb41e92ab8db595b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tip: {fileID: 0}
+  TestCube: {fileID: 1443762564461140829}
+  Stylus: {fileID: 0}
+  LayerMask: 7
 --- !u!1 &6930543098892695208
 GameObject:
   m_ObjectHideFlags: 0
@@ -46,7 +63,7 @@ GameObject:
   - component: {fileID: 8876243342349244285}
   m_Layer: 0
   m_Name: HalfCyl (2)
-  m_TagString: Untagged
+  m_TagString: Touchable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +144,7 @@ GameObject:
   - component: {fileID: 7735004003542497358}
   m_Layer: 0
   m_Name: HalfCyl
-  m_TagString: Untagged
+  m_TagString: Touchable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +226,7 @@ GameObject:
   - component: {fileID: 7767991271248249937}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Touchable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

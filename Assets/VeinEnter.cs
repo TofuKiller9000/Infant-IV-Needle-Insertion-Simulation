@@ -26,7 +26,7 @@ namespace HurricaneVR.Framework.Core.Stabbing
             var layermask = collision.gameObject.layer; 
             if(collision.gameObject.tag == "Touchable" && layermask == layerMsk)
             {
-                collision.gameObject.GetComponent<MeshRenderer>().material = enteredMaterial;
+                //collision.gameObject.GetComponent<MeshRenderer>().material = enteredMaterial;
                 if(HallowTube != null )
                 {
                     HallowTube.GetComponent<HallowTube_Manager>().AlignToVein(collision.contacts[0], collision.transform);
@@ -43,7 +43,7 @@ namespace HurricaneVR.Framework.Core.Stabbing
             {
                 if(defaultMaterial != null)
                 {
-                    collision.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+                    //collision.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
                 }
                 if (HallowTube != null)
                 {
