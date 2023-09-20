@@ -5,7 +5,7 @@ using UnityEngine;
 public class InitializeResistance : MonoBehaviour
 {
 
-    public bool Trigger; 
+   static  public bool Trigger; 
 
     // Start is called before the first frame update
     void Start()
