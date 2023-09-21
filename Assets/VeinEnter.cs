@@ -9,12 +9,14 @@ namespace HurricaneVR.Framework.Core.Stabbing
 {
     public class VeinEnter : MonoBehaviour
     {
-        public bool Resistance_A; //Does not parent
-        public bool Resistance_B; //Does Parent
+        //public bool Resistance_A; //Does not parent
+        //public bool Resistance_B; //Does Parent
 
         public string MaskedLayer;
         public GameObject HallowTube;
         private int layerMsk;
+        public Transform end; 
+
         
 
         private void Awake()
@@ -22,23 +24,6 @@ namespace HurricaneVR.Framework.Core.Stabbing
             layerMsk = LayerMask.NameToLayer(MaskedLayer);
         }
 
-        private void Start()
-        {
-
-
-            if (Resistance_A)
-            {
-                Resistance_B = false;
-                HallowTube.transform.parent = null;
-                InitializeResistance.Trigger = true; 
-            }
-            else if (Resistance_B)
-            {
-                Resistance_A = false;
-                HallowTube.transform.SetParent(transform, false);
-                InitializeResistance.Trigger = false;
-            }
-        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -50,14 +35,10 @@ namespace HurricaneVR.Framework.Core.Stabbing
                 if(HallowTube != null )
                 {
 
-                    if(Resistance_A)
-                    {
-                        HallowTube.GetComponent<HallowTube_Manager>().AlignToVein(collision.contacts[0], collision.transform);
-                    }
-                    else
-                    {
-                        HallowTube.GetComponent<HallowTube_Manager>().TurnOnResistance();
-                    }
+                    HallowTube.GetComponent<HallowTube_Manager>().AlignToVein(collision.contacts[0], transform);
+
+                    //HallowTube.GetComponent<HallowTube_Manager>().TurnOnResistance(transform);
+
                 }
 
             }
@@ -71,14 +52,10 @@ namespace HurricaneVR.Framework.Core.Stabbing
                 //collision.gameObject.GetComponent<MeshRenderer>().material = enteredMaterial;
                 if (HallowTube != null)
                 {
-                    if(Resistance_A)
-                    {
-                        HallowTube.GetComponent<HallowTube_Manager>().DisalignToVein();
-                    }
-                    else
-                    {
-                        HallowTube.GetComponent<HallowTube_Manager>().TurnOffResistance();
-                    }
+
+                    HallowTube.GetComponent<HallowTube_Manager>().DisalignToVein();
+
+                        //HallowTube.GetComponent<HallowTube_Manager>().TurnOffResistance();
                 }
 
             }
