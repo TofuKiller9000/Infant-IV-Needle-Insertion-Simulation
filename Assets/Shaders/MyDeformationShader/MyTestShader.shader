@@ -71,7 +71,7 @@ Shader "DeformationShader/MyTestShader"
             float _OcclusionStrength;
             float _Cutoff;
             float _BumpScale;
-            #define MAX_DEFORMERS 30
+            #define MAX_DEFORMERS 15
 
             float4 _DeformerPS[MAX_DEFORMERS]; //position, size/radius of circle
             int _DeformerNum; //number that is currently in the scene
@@ -300,45 +300,45 @@ Shader "DeformationShader/MyTestShader"
                     ENDHLSL
     }
 
-                //UsePass "Universal Render Pipeline/Lit/ShadowCaster"
-                //UsePass "Universal Render Pipeline/Lit/DepthOnly"
+               // UsePass "Universal Render Pipeline/Lit/ShadowCaster"
+             //   UsePass "Universal Render Pipeline/Lit/DepthOnly"
                 //this can techniqually cause issues later on, as it won't make this shader compatible with SRP Batcher
-                //Pass
-                //{
-                //    Name "ShadowCaster"
-                //    Tags {"LightMode" = "ShadowCaster"}
+                Pass
+                {
+                    Name "ShadowCaster"
+                    Tags {"LightMode" = "ShadowCaster"}
 
-                //    ZWrite On
-                //    ZTest LEqual
+                    ZWrite On
+                    ZTest LEqual
 
-                //    HLSLPROGRAM
-                //    #pragma vertex DisplacedShadowPassVertex
-                //    #pragma fragment ShadowPassFragment
+                    HLSLPROGRAM
+                    #pragma vertex DisplacedShadowPassVertex
+                    #pragma fragment ShadowPassFragment
 
-                //            //Material Keywords
-                //    #pragma shader_feature_local_fragment _ALPHATEST_ON
-                //    #pragma shader_feature_local_fragment_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+                            //Material Keywords
+                    #pragma shader_feature_local_fragment _ALPHATEST_ON
+                    #pragma shader_feature_local_fragment_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
-                //    #pragma multi_compile_instancing
+                    #pragma multi_compile_instancing
 
-                //    #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
-                //    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-                //    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-                //    #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
+                    #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+                    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+                    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+                    #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
 
-                //    Varyings DisplacedShadowPassVertex(Attributes IN)
-                //    {
-                //        Varyings output = (Varyings)0; 
+                    Varyings DisplacedShadowPassVertex(Attributes IN)
+                    {
+                        Varyings output = (Varyings)0; 
 
-                //        VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
+                        VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
 
-                //        output.uv = TRANSFORM_TEX(IN.texcoord, _BaseMap);
-                //        output.positionCS = GetShadowPositionHClip(IN);
-                //        return output; 
-                //     }
+                        output.uv = TRANSFORM_TEX(IN.texcoord, _BaseMap);
+                        output.positionCS = GetShadowPositionHClip(IN);
+                        return output; 
+                     }
 
-                //    ENDHLSL
-                //}
+                    ENDHLSL
+                }
 
                 Pass{
                         Name "DepthOnly"
