@@ -14,37 +14,36 @@ public class DeformerManager : MonoBehaviour
     private float[] strengthBuffer;
 
     [Header("Haptic Objects")]
-    public HapticPlugin hapticDevice = null;
-    public HapticEffect hapticEffect;
+    //public HapticPlugin hapticDevice = null;
+    //public HapticEffect hapticEffect;
 
-    public float strength;
+    public float strength; 
 
     private void Start()
     {
         shaderBuffer = new Vector4[maxDeformers];
         strengthBuffer = new float[maxDeformers];
-        // this needs to get reset after each start, as Unity does not clear it by default
+        //this needs to get reset after each start, as Unity does not clear it by default
 
-        if (hapticDevice == null)
-        {
-            hapticDevice = (HapticPlugin)FindObjectOfType(typeof(HapticPlugin));
-        }
-        if (hapticDevice == null)
-        {
-            Debug.LogError("Missing Required Haptic Device");
-        }
+        //if (hapticDevice == null)
+        //{
+        //    hapticDevice = (HapticPlugin)FindObjectOfType(typeof(HapticPlugin));
+        //}
+        //if (hapticDevice == null)
+        //{
+        //    Debug.LogError("Missing Required Haptic Device");
+        //}
     }
 
     private void Update()
     {
 
-
-        hapticEffect.Magnitude = hapticDevice.touchingDepth / 10;
+        //hapticEffect.Magnitude = hapticDevice.touchingDepth / 10;
 
         for (int i = 0; i < maxDeformers; i++)
         {
             shaderBuffer[i] = Vector4.zero;
-            strengthBuffer[i] = 1;
+            strengthBuffer[i] = 1; 
         }
 
         int numActive = 0;
@@ -57,12 +56,11 @@ public class DeformerManager : MonoBehaviour
 
             if (deformer.isActiveAndEnabled)
             {
-                //print(deformer.radius);
                 Vector3 posn = deformer.transform.position;
                 shaderBuffer[numActive] = new Vector4(posn.x, posn.y, posn.z, deformer.radius);
 
-                //strength = Mathf.Lerp(0, deformer.strength, (float)hapticEffect.Magnitude);
-                 strength = deformer.strength;
+                // strength = Mathf.Lerp(0, deformer.maxStrength, (float)hapticEffect.Magnitude);
+                strength = deformer.maxStrength;
                 //print(strength);
                 strengthBuffer[numActive] = strength;
                 numActive++;
@@ -70,7 +68,7 @@ public class DeformerManager : MonoBehaviour
 
         }
 
-
+        
 
         Shader.SetGlobalInt("_DeformerNum", numActive);
         //print(Shader.GetGlobalInt("_DeformerCount"));

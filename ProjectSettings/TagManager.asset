@@ -6,6 +6,10 @@ TagManager:
   tags:
   - projectile
   - Touchable
+  - Index
+  - thumb
+  - Needle
+  - QuestHand
   layers:
   - Default
   - TransparentFX
@@ -18,7 +22,7 @@ TagManager:
   - Player
   - DynamicPose
   - arm
-  - 
+  - Needle
   - 
   - 
   - 
@@ -29,7 +33,7 @@ TagManager:
   - 
   - Grabbable
   - Hand
-  - 
+  - glove
   - 
   - 
   - 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Deformer : MonoBehaviour
 {
     public float radius;
-    public float strength; 
+    public float maxStrength; 
 }
 
 
