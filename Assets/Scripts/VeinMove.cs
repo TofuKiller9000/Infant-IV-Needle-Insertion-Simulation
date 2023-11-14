@@ -22,10 +22,8 @@ public class VeinMove : MonoBehaviour
     [Space]
     public float rollval = 0;
     public float rollrate;
-    public float resettime = 100f;
     public float timeTillReset = 30f; 
     private float timeLeft;
-    public float resettimer = 1000000000f;
 
     private float x;
     private float y;
@@ -322,12 +320,12 @@ public class VeinMove : MonoBehaviour
 
     public void VeinEntered()
     {
-        //inserted = true;
+        inserted = true;
     }
 
     public void VeinLeft()
     {
-        //inserted = false;
+        inserted = false;
     }
 
     public void ResetTimer()

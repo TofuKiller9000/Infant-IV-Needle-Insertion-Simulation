@@ -16,10 +16,9 @@ public class VeinRoll : MonoBehaviour
     public TextMeshProUGUI _leftVein, _rightVein; 
     public float maxBlendShapeVal, minBlendShapeVal;
     public float rollrate;
-    public float resettime = 2;
-    public float resettimer = 100000000000;
-    public LayerMask gloveMask; 
-     
+    public LayerMask gloveMask;
+    public float timeTillReset = 5;
+    private float timeLeft;
 
 
     #region Vein Roll Properties
@@ -38,6 +37,7 @@ public class VeinRoll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timeLeft = timeTillReset;
         x = transform.localPosition.x;
         y = transform.localPosition.y;
         xcomp = transform.position.x;
@@ -52,9 +52,7 @@ public class VeinRoll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var temp = Mathf.Floor(Arm.GetBlendShapeWeight(0));
-
-        //_debugginText.text = "Value: " + temp.ToString();
+        _debugginText.text = "Timer: " + timeLeft.ToString();
         //_leftVein.text = Mathf.Floor(Arm.GetBlendShapeWeight(2)).ToString();
         //_rightVein.text = Mathf.Floor(Arm.GetBlendShapeWeight(1)).ToString();
 
@@ -87,32 +85,46 @@ public class VeinRoll : MonoBehaviour
 
         if (!contact && HG.touched == false)
         {
-            if (Time.time > resettime + resettimer)
+            timeLeft -= Time.deltaTime;
+            if(timeLeft <= 0)
             {
                 if (Arm.GetBlendShapeWeight(0) > minBlendShapeVal)
                 {
                     Arm.SetBlendShapeWeight(0, Arm.GetBlendShapeWeight(0) - (rollrate * 2) * Time.deltaTime);
                 }
-               if (Mathf.Floor(Arm.GetBlendShapeWeight(0)) == minBlendShapeVal)
+                if (Mathf.Floor(Arm.GetBlendShapeWeight(0)) == minBlendShapeVal)
                 {
                     _debugginText.text = "At Min Blendshape";
                     //_veinMove.BulgeDectivate();
                 }
             }
+            //if (Time.time > resettime + resettimer)
+            //{
+            //    if (Arm.GetBlendShapeWeight(0) > minBlendShapeVal)
+            //    {
+            //        Arm.SetBlendShapeWeight(0, Arm.GetBlendShapeWeight(0) - (rollrate * 2) * Time.deltaTime);
+            //    }
+            //   if (Mathf.Floor(Arm.GetBlendShapeWeight(0)) == minBlendShapeVal)
+            //    {
+            //        _debugginText.text = "At Min Blendshape";
+            //        //_veinMove.BulgeDectivate();
+            //    }
+            //}
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.layer == gloveMask || other.gameObject.name.Contains("Left"))
+        print(other.gameObject.layer + " " + other.gameObject.name + contact);
+        if (other.gameObject.layer == 22 || other.gameObject.name.Contains("Left"))
         {
             contact = true;
-            //print("Collision Entered for Vein Roll");
+            ResetTimer();
+            print("Collision Entered for Vein Roll");
         }
         else
         {
-            print(other.gameObject.name);
+            //print(other.gameObject.layer + " " + contact);
         }
     }
 
@@ -121,11 +133,15 @@ public class VeinRoll : MonoBehaviour
         if (other.gameObject.layer == gloveMask || other.gameObject.name.Contains("Left"))
         {
             contact = false;
-            resettimer = Time.time;
+            ResetTimer();
         }
         else
         {
-            print(other.gameObject.name);
+            //print(other.gameObject.name);
         }
+    }
+    public void ResetTimer()
+    {
+        timeLeft = timeTillReset;
     }
 }
