@@ -23,55 +23,79 @@ public class VeinMove : MonoBehaviour
     public float rollval = 0;
     public float rollrate;
     public float resettime = 100f;
+    public float timeTillReset = 30f; 
+    private float timeLeft;
     public float resettimer = 1000000000f;
 
     private float x;
     private float y;
     private float basez;
     private float distance = .0003f;
+    private Vector3 previousPosition; 
 
     // Start is called before the first frame update
     void Start()
     {
+        timeLeft = timeTillReset;
         x = transform.localPosition.x;
         y = transform.localPosition.y;
         basez = transform.localPosition.z;
+        previousPosition = defaultVeinRollPosition.position;
+        var distance =  Vector3.Distance(leftVeinRollPosition.position, rightVeinRollPosition.position);
+        print(distance);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //print("Timer: " + timeLeft);
         //VEIN ROLLING MOVEMENT TO BE EDITED
-       // transform.localPosition = new Vector3(x, y, transform.localPosition.z);
+        // transform.localPosition = new Vector3(x, y, transform.localPosition.z);
 
-        //if (!inserted && !roll)
-        //{
-        //    if (Time.time > resettime + resettimer)
-        //    {
-        //        if (Arm.GetBlendShapeWeight(1) > 0)
-        //        {
-        //            Arm.SetBlendShapeWeight(1, Arm.GetBlendShapeWeight(1) - (rollrate * 2) * Time.deltaTime);
-        //        }
-        //        if (Arm.GetBlendShapeWeight(2) > 0)
-        //        {
-        //            Arm.SetBlendShapeWeight(2, Arm.GetBlendShapeWeight(2) - (rollrate * 2) * Time.deltaTime);
-        //        }
-        //        rollval = 0;
-        //        transform.localPosition = new Vector3(x, y, basez);
-        //    }
-        //}
+        if (!inserted && !roll)
+        {
+            timeLeft -= Time.deltaTime;
+            if(timeLeft < 0)
+            {
+                if (Arm.GetBlendShapeWeight(1) > 0 || Arm.GetBlendShapeWeight(2) > 0)
+                {
+                    Arm.SetBlendShapeWeight(1, Mathf.Clamp(Arm.GetBlendShapeWeight(1) - (rollrate * 2) * Time.deltaTime, minRollVal, maxRollVal));
+                    Arm.SetBlendShapeWeight(2, Mathf.Clamp(Arm.GetBlendShapeWeight(2) - (rollrate * 2) * Time.deltaTime, minRollVal, maxRollVal));
+                    vein.transform.position = Vector3.MoveTowards(vein.transform.position, defaultVeinRollPosition.position, 0.01f * Time.deltaTime);
+                }
+                
+                rollval = 0;
+            }
+            //if (Time.time > resettime + resettimer)
+            //{
+            //    if (Arm.GetBlendShapeWeight(1) > 0)
+            //    {
+            //       Arm.SetBlendShapeWeight(1, Arm.GetBlendShapeWeight(1) - (rollrate * 2) * Time.deltaTime);
+            //    }
+            //    if (Arm.GetBlendShapeWeight(2) > 0)
+            //    {
+            //        Arm.SetBlendShapeWeight(2, Arm.GetBlendShapeWeight(2) - (rollrate * 2) * Time.deltaTime);
+            //    }
+            //    rollval = 0;
+            //    transform.localPosition = new Vector3(x, y, basez);
+            //}
+        }
 
         if (roll && !bulge)
         {
             //print("Roll is true AND we are not bulging");
             if (rollval > 0) //rollval == 100 we are moving right
             {
+                var distance = Vector3.Distance(vein.transform.position, rightVeinRollPosition.position);
+                //print("distance to rightveinRollposition: " + distance);
                 //print("rollval is greater than 0");
-                if(Arm.GetBlendShapeWeight(1) < maxRollVal || Arm.GetBlendShapeWeight(2) > minRollVal) //probably also want to set it up that it will continue until the leftposition has been reached //check the distance like what we are doing in the onTriggerEnter
+                if (Arm.GetBlendShapeWeight(1) < maxRollVal || Arm.GetBlendShapeWeight(2) > minRollVal || distance > 0.001f) //probably also want to set it up that it will continue until the leftposition has been reached //check the distance like what we are doing in the onTriggerEnter
                 {
+                    previousPosition = vein.transform.position;
                    // print("BlendShapeweight(1) is less than its maxRollVal");
-                    Arm.SetBlendShapeWeight(1, Mathf.Clamp(Arm.GetBlendShapeWeight(1) + (rollrate * 2) * Time.deltaTime, minRollVal, maxRollVal));
-                    Arm.SetBlendShapeWeight(2, Mathf.Clamp(Arm.GetBlendShapeWeight(2) - (rollrate * 2) * Time.deltaTime, minRollVal, maxRollVal));
+                    Arm.SetBlendShapeWeight(1, Mathf.Clamp(Arm.GetBlendShapeWeight(1) + (rollrate) * Time.deltaTime, minRollVal, maxRollVal));
+                    Arm.SetBlendShapeWeight(2, Mathf.Clamp(Arm.GetBlendShapeWeight(2) - (rollrate) * Time.deltaTime, minRollVal, maxRollVal));
+                    vein.transform.position = Vector3.MoveTowards(vein.transform.position, rightVeinRollPosition.position, 0.004f * Time.deltaTime);
                     //here we also want to move our vein cube to its new position of the leftPosition
                 }
                 else
@@ -126,13 +150,16 @@ public class VeinMove : MonoBehaviour
             }
             else if(rollval < 0)
             {
+                var distance = Vector3.Distance(vein.transform.position, leftVeinRollPosition.position);
+                //print("rollval is greater than 0");;
                 //print("rollval is greater than 0");
-                //print("rollval is greater than 0");
-                if (Arm.GetBlendShapeWeight(2) < maxRollVal || Arm.GetBlendShapeWeight(1) > minRollVal)
+                if (Arm.GetBlendShapeWeight(2) < maxRollVal || Arm.GetBlendShapeWeight(1) > minRollVal || distance > 0.001)
                 {
+                    previousPosition = vein.transform.position;
                     // print("BlendShapeweight(1) is less than its maxRollVal");
-                    Arm.SetBlendShapeWeight(2, Mathf.Clamp(Arm.GetBlendShapeWeight(2) + (rollrate * 2) * Time.deltaTime, minRollVal, maxRollVal));
-                    Arm.SetBlendShapeWeight(1, Mathf.Clamp(Arm.GetBlendShapeWeight(1) - (rollrate * 2) * Time.deltaTime, minRollVal, maxRollVal));
+                    Arm.SetBlendShapeWeight(2, Mathf.Clamp(Arm.GetBlendShapeWeight(2) + (rollrate) * Time.deltaTime, minRollVal, maxRollVal));
+                    Arm.SetBlendShapeWeight(1, Mathf.Clamp(Arm.GetBlendShapeWeight(1) - (rollrate) * Time.deltaTime, minRollVal, maxRollVal));
+                    vein.transform.position = Vector3.MoveTowards(vein.transform.position, leftVeinRollPosition.position, 0.004f * Time.deltaTime);
                     //here we also want to move our vein cube to its new position of the rightPosition
                 }
                 else
@@ -144,6 +171,7 @@ public class VeinMove : MonoBehaviour
             else if(rollval == 0)
             {
                 print("Roll val is 0");
+                vein.transform.position = previousPosition;
             }
 
 
@@ -212,50 +240,54 @@ public class VeinMove : MonoBehaviour
         
         if ((other.transform.tag == "Needle" && !bulge))
         {
-            Debug.Log("Collision Entered");
+            //Debug.Log("Collision Entered");
             Vector3 tmp = vein.transform.InverseTransformPoint(other.transform.position);
             if (tmp.z < 0)
             {
                 //Vein was touched on the left side so it must roll right
-                Debug.Log("Going right");
+                //Debug.Log("Going right");
                 //if (vein.transform.localPosition.z + distance <= -0.0491)
                 //{
                 //    vein.transform.localPosition = new Vector3(x, y, vein.transform.localPosition.z + distance);
                 //}
                 var distance = Vector3.Distance(vein.transform.position, rightVeinRollPosition.position);
-                if(distance <= 0.005f)
+                if (distance <= 0.001f)
                 {
                     //if we are basically are the right vein position, we want to set it to be at the right vein position and not pursue continuing to roll. 
+                    vein.transform.position = rightVeinRollPosition.position;
                 }
                 else
                 {
+                    //vein.transform.position = new Vector3(vein.transform.position.x - 0.0001f, vein.transform.position.y, vein.transform.position.z);
                     rollval = 100;
                     roll = true;
-                    resettimer = Time.time;
+                    ResetTimer();
+                    //resettimer = Time.time;
                     //I get it now, we want to move in increment big enought that it will re-trigger a OnTriggerEnter since we would be leaving the collider; is this necessarily better? 
                 }
-
             }
             else //vein was touched on the right so it must roll left
             {
                 
-               Debug.Log("Going left");
+               //Debug.Log("Going left");
                 //if (vein.transform.localPosition.z - distance >= -0.0478)
                 //{
                 //  vein.transform.localPosition = new Vector3(x, y, vein.transform.localPosition.z - distance);
                 //}
                 var distance = Vector3.Distance(vein.transform.position, leftVeinRollPosition.position);
-                if(distance <= 0.005f)
+                if (distance <= 0.001f)
                 {
+                    vein.transform.position = leftVeinRollPosition.position;
                     //if we are basically are the left vein position, we want to set it to be at the left vein position and not pursue continuing to roll.
                 }
                 else
                 {
+                    //vein.transform.position = new Vector3(vein.transform.position.x + 0.0001f, vein.transform.position.y, vein.transform.position.z);
                     roll = true;
                     rollval = -100;
-                    resettimer = Time.time;
+                    ResetTimer();
+                    //resettimer = Time.time;
                 }
-
             }
             //-0.0491 //right
             //-0.0478 //left
@@ -296,5 +328,10 @@ public class VeinMove : MonoBehaviour
     public void VeinLeft()
     {
         //inserted = false;
+    }
+
+    public void ResetTimer()
+    {
+        timeLeft = timeTillReset;
     }
 }

@@ -105,7 +105,7 @@ public class VeinRoll : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.layer == 6 || other.gameObject.name.Contains("Left"))
+        if (other.gameObject.layer == gloveMask || other.gameObject.name.Contains("Left"))
         {
             contact = true;
             //print("Collision Entered for Vein Roll");
