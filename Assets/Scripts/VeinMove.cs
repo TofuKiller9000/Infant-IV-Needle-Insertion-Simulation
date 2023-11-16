@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class VeinMove : MonoBehaviour
@@ -8,9 +9,11 @@ public class VeinMove : MonoBehaviour
     [Header("Vein Move Properties")]
     public GameObject vein;
     public SkinnedMeshRenderer Arm;
+    public TextMeshProUGUI veinRollingText;
+    public TextMeshProUGUI veinStabilizedText;
     public bool touched = false;
     public bool inserted = false;
-    private bool bulge = false;
+    public bool bulge = false;
     public bool roll = false;
     [Space]
 
@@ -41,6 +44,10 @@ public class VeinMove : MonoBehaviour
         previousPosition = defaultVeinRollPosition.position;
         var distance =  Vector3.Distance(leftVeinRollPosition.position, rightVeinRollPosition.position);
         print(distance);
+        veinStabilizedText.text = "Vein Stabilized: False";
+        veinStabilizedText.color = Color.red;
+        veinRollingText.text = "Vein Rolling: False";
+        veinRollingText.color = Color.red;
     }
 
     // Update is called once per frame
@@ -103,7 +110,7 @@ public class VeinMove : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {  
 
-        if ((other.transform.tag == "Needle" && !bulge))
+        if ((other.transform.tag == "Needle" || other.transform.tag == "Index") && !bulge)
         {
             Vector3 tmp = transform.InverseTransformPoint(other.transform.position);
             if (tmp.z < 0)
@@ -119,6 +126,8 @@ public class VeinMove : MonoBehaviour
                     rollval = 100;
                     vein.gameObject.GetComponent<Collider>().enabled = false;
                     roll = true;
+                    veinRollingText.text = "Vein Rolling: True"; 
+                    veinRollingText.color = Color.green;
                     ResetTimer();
 
                 }
@@ -135,6 +144,10 @@ public class VeinMove : MonoBehaviour
                 else
                 {
                     roll = true;
+                    veinRollingText.text = "Vein Rolling: True";
+                    veinRollingText.color = Color.green;
+                    veinStabilizedText.text = "Vein Stabilized: False";
+                    veinStabilizedText.color = Color.red;
                     rollval = -100;
                     vein.gameObject.GetComponent<Collider>().enabled = false;
                     ResetTimer();
@@ -144,6 +157,10 @@ public class VeinMove : MonoBehaviour
 
         else if (other.transform.tag == "Needle" && bulge)
         {
+            veinRollingText.text = "Vein Rolling: False";
+            veinRollingText.color = Color.red;
+            veinStabilizedText.text = "Vein Stabilized: True";
+            veinStabilizedText.color = Color.green; 
             roll = false;
             rollval = 0;
             vein.gameObject.GetComponent<Collider>().enabled = true;
@@ -153,9 +170,13 @@ public class VeinMove : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.transform.tag == "Needle" && !bulge)
+        if((other.transform.tag == "Needle" || other.transform.tag == "Index") && !bulge)
         {
             roll = false;
+            veinRollingText.text = "Vein Rolling: False";
+            veinRollingText.color = Color.red;
+            veinStabilizedText.text = "Vein Stabilized: False";
+            veinStabilizedText.color = Color.red;
             rollval = 0;
             vein.gameObject.GetComponent<Collider>().enabled = true;
         }
@@ -165,11 +186,15 @@ public class VeinMove : MonoBehaviour
     public void BulgeActivate()
     {
         bulge = true;
+        veinStabilizedText.text = "Vein Stabilized: True";
+        veinStabilizedText.color = Color.green;
     }
 
     public void BulgeDectivate()
     {
         bulge = false;
+        veinStabilizedText.text = "Vein Stabilized: False";
+        veinStabilizedText.color = Color.red;
     }
 
     public void VeinEntered()

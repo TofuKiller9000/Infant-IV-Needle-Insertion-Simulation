@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 
 public class VeinTriggerCheck : MonoBehaviour
 {
     public bool isNeedleOut = true;
-    public TextMeshProUGUI InVeinText; 
+    public TextMeshProUGUI InVeinText;
+    public VeinMove _veinMove; 
         // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class VeinTriggerCheck : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("triggerEnter: " + other.gameObject.name);
-        if (other.gameObject.transform.tag == "Needle")
+        if (other.gameObject.transform.tag == "Needle" && _veinMove.bulge == true)
         {
             InVeinText.text = "In Vein";
             InVeinText.color = Color.green;

@@ -12,8 +12,7 @@ public class VeinRoll : MonoBehaviour
     public SkinnedMeshRenderer Arm;
     public HandGrabber HG;
     public VeinMove _veinMove;
-    public TextMeshProUGUI _debugginText;
-    public TextMeshProUGUI _leftVein, _rightVein; 
+    public TextMeshProUGUI veinBulging; 
     public float maxBlendShapeVal, minBlendShapeVal;
     public float rollrate;
     public LayerMask gloveMask;
@@ -43,43 +42,20 @@ public class VeinRoll : MonoBehaviour
         xcomp = transform.position.x;
         ycomp = transform.position.y;
         basez = transform.localPosition.z;
-        if(_veinMove == null)
-        {
-            
-        }
+        veinBulging.text = "Vein Bulging : False ";
+        veinBulging.color = Color.red;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _debugginText.text = "Timer: " + timeLeft.ToString();
-        //_leftVein.text = Mathf.Floor(Arm.GetBlendShapeWeight(2)).ToString();
-        //_rightVein.text = Mathf.Floor(Arm.GetBlendShapeWeight(1)).ToString();
-
-        //if(temp ==maxBlendShapeVal)
-        //{
-        //    _debugginText.color = Color.green;
-        //}
-        //else
-        //{
-        //    _debugginText.color = Color.red;
-        //}
-        //Vein Puff
         if (contact)
         {
             if (Arm.GetBlendShapeWeight(0) <= maxBlendShapeVal)
             {
                 Arm.SetBlendShapeWeight(0,Mathf.Clamp(Arm.GetBlendShapeWeight(0) + (rollrate * 2) * Time.deltaTime, minBlendShapeVal, maxBlendShapeVal));
-            }
-            if(Mathf.Floor(Arm.GetBlendShapeWeight(0)) == maxBlendShapeVal)
-            {
-                
-                //print("At max Blendshape value: " + Mathf.Floor(Arm.GetBlendShapeWeight(0)));
-               // _veinMove.BulgeActivate();
-            }
-            else
-            {
-                //print(Arm.GetBlendShapeWeight(0));
+                veinBulging.text = "Vein Bulging : True ";
+                veinBulging.color = Color.green;
             }
         }
 
@@ -91,52 +67,30 @@ public class VeinRoll : MonoBehaviour
                 if (Arm.GetBlendShapeWeight(0) > minBlendShapeVal)
                 {
                     Arm.SetBlendShapeWeight(0, Arm.GetBlendShapeWeight(0) - (rollrate * 2) * Time.deltaTime);
-                }
-                if (Mathf.Floor(Arm.GetBlendShapeWeight(0)) == minBlendShapeVal)
-                {
-                    _debugginText.text = "At Min Blendshape";
-                    //_veinMove.BulgeDectivate();
+                    veinBulging.text = "Vein Bulging : False ";
+                    veinBulging.color = Color.red;
                 }
             }
-            //if (Time.time > resettime + resettimer)
-            //{
-            //    if (Arm.GetBlendShapeWeight(0) > minBlendShapeVal)
-            //    {
-            //        Arm.SetBlendShapeWeight(0, Arm.GetBlendShapeWeight(0) - (rollrate * 2) * Time.deltaTime);
-            //    }
-            //   if (Mathf.Floor(Arm.GetBlendShapeWeight(0)) == minBlendShapeVal)
-            //    {
-            //        _debugginText.text = "At Min Blendshape";
-            //        //_veinMove.BulgeDectivate();
-            //    }
-            //}
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         print(other.gameObject.layer + " " + other.gameObject.name + contact);
-        if (other.gameObject.layer == 22 || other.gameObject.name.Contains("Left"))
+        if ((other.gameObject.layer == 22 || other.gameObject.name.Contains("Left")) && other.transform.tag != "Index")
         {
             contact = true;
             ResetTimer();
             print("Collision Entered for Vein Roll");
         }
-        else
-        {
-            //print(other.gameObject.layer + " " + contact);
-        }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 22 || other.gameObject.name.Contains("Left"))
+        if (other.gameObject.layer == 22 || other.gameObject.name.Contains("Left") && other.transform.tag != "Index")
         {
             contact = false;
-        }
-        else
-        {
-            //print(other.gameObject.name);
         }
     }
     public void ResetTimer()
