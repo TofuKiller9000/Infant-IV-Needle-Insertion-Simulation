@@ -6,14 +6,15 @@ using UnityEngine.Rendering;
 public class DeformerManager : MonoBehaviour
 {
     [Header("Deformer Settings")]
-    [SerializeField] private Deformer[] deformers;
-    [SerializeField] private int maxDeformers;
+    public  Deformer[] deformers;
+    public int maxDeformers;
 
-
+    [SerializeField]
     private Vector4[] shaderBuffer;
+    [SerializeField]
     private float[] strengthBuffer;
 
-    [Header("Haptic Objects")]
+    //[Header("Haptic Objects")]
     //public HapticPlugin hapticDevice = null;
     //public HapticEffect hapticEffect;
 

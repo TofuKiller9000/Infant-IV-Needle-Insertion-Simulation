@@ -71,7 +71,7 @@ Shader "DeformationShader/MyTestShader"
             float _OcclusionStrength;
             float _Cutoff;
             float _BumpScale;
-            #define MAX_DEFORMERS 15
+            #define MAX_DEFORMERS 24
 
             float4 _DeformerPS[MAX_DEFORMERS]; //position, size/radius of circle
             int _DeformerNum; //number that is currently in the scene

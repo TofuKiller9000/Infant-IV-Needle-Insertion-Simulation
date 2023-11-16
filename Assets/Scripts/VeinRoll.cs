@@ -130,10 +130,9 @@ public class VeinRoll : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == gloveMask || other.gameObject.name.Contains("Left"))
+        if (other.gameObject.layer == 22 || other.gameObject.name.Contains("Left"))
         {
             contact = false;
-            ResetTimer();
         }
         else
         {
