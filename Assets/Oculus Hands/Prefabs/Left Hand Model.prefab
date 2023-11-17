@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &109434732395451515
 Transform:
   m_ObjectHideFlags: 0
@@ -10680,6 +10680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.02
+  maxStrength: 0
 --- !u!1 &5045336618220655537
 GameObject:
   m_ObjectHideFlags: 0
@@ -10724,6 +10725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.02
+  maxStrength: 0
 --- !u!1 &5367814485891848974
 GameObject:
   m_ObjectHideFlags: 0
@@ -10768,6 +10770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.02
+  maxStrength: 0
 --- !u!1 &7456052868719886687
 GameObject:
   m_ObjectHideFlags: 0
@@ -10812,6 +10815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.15
+  maxStrength: 0
 --- !u!1 &7529435603416970773
 GameObject:
   m_ObjectHideFlags: 0
@@ -10856,6 +10860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.02
+  maxStrength: 0
 --- !u!1 &7543471425355796492
 GameObject:
   m_ObjectHideFlags: 0
@@ -15704,6 +15709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.02
+  maxStrength: 0
 --- !u!1 &8407353447921112887
 GameObject:
   m_ObjectHideFlags: 0
