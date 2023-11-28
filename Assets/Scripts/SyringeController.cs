@@ -87,7 +87,7 @@ public class SyringeController : MonoBehaviour
 
 		lastInsertion = new NeedleInsertion();
 
-		veinMask = LayerMask.NameToLayer("vein");
+		veinMask = LayerMask.NameToLayer("PatientVein");
 		armMask = LayerMask.NameToLayer("arm");
 	}
 
@@ -139,6 +139,7 @@ public class SyringeController : MonoBehaviour
 			if (hapticDevice.touchingDepth > 4) {
 				skinSurface.hlStaticFriction = 1;
 				skinSurface.hlDynamicFriction = 1;
+				print("Increasing Static and Dynamic Friction");
 			}
 			else {
 				skinSurface.hlStaticFriction = 0.2f;
@@ -209,9 +210,10 @@ public class SyringeController : MonoBehaviour
 			if (hit.transform.gameObject.layer == veinMask) 
 			{
 				//print(hit.transform.gameObject.name);
-				Debug.DrawLine(startPos, hit.point, Color.magenta);
+				Debug.DrawLine(startPos, hit.point, Color.green);
 				veinCheck = true;
 				isInsideVein = true;
+				print("Is Inside vein");
 				if (isInsideSkin)
 					break;
 			}
@@ -222,6 +224,10 @@ public class SyringeController : MonoBehaviour
 
 				lastSkinHit = hit;
 				Debug.DrawLine(hit.point, new Vector3(hit.point.x + hit.normal.x, hit.point.y + hit.normal.y, hit.point.z + hit.normal.z ), Color.blue);
+			}
+			else
+			{
+				print("Name: " + hit.transform.gameObject.layer);
 			}
 		}
 
@@ -277,14 +283,14 @@ public class SyringeController : MonoBehaviour
 		//lastInsertion.enterTime = SessionManager.curSession.timeElapsed;
 		//lastInsertion.angleDegrees = Mathf.RoundToInt(needleAngle);
 
-		//if (blocker)
-		//{
-		//	blocker.SetActive(true);
-		//	blocker.transform.position = transform.position;
-		//	blocker.transform.rotation = transform.rotation;
-		//	blocker.transform.position = blockerPos.transform.position;
+		if (blocker)
+		{
+			blocker.SetActive(true);
+			blocker.transform.position = transform.position;
+			blocker.transform.rotation = transform.rotation;
+			blocker.transform.position = blockerPos.transform.position;
 
-		//}
+		}
 
 		//mol modify:  uncommand below
 
@@ -394,11 +400,11 @@ public class SyringeController : MonoBehaviour
 		}
 		//mol modification
 
-		//if (blocker)
-		//{
-		//	blocker.SetActive(false);
-		//	isblocker = false;
-		//}
+		if (blocker)
+		{
+			blocker.SetActive(false);
+			isblocker = false;
+		}
 
 	}
 

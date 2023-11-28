@@ -76,7 +76,7 @@ public class VeinRoll : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.layer + " " + other.gameObject.name + contact);
+        //print(other.gameObject.layer + " " + other.gameObject.name + contact);
         if ((other.gameObject.layer == 22 || other.gameObject.name.Contains("Left")) && other.transform.tag != "Index")
         {
             contact = true;
