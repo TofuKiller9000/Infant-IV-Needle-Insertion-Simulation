@@ -225,10 +225,10 @@ public class SyringeController : MonoBehaviour
 				lastSkinHit = hit;
 				Debug.DrawLine(hit.point, new Vector3(hit.point.x + hit.normal.x, hit.point.y + hit.normal.y, hit.point.z + hit.normal.z ), Color.blue);
 			}
-			else
-			{
-				print("Name: " + hit.transform.gameObject.layer);
-			}
+			//else
+			//{
+			//	print("Name: " + hit.transform.gameObject.layer);
+			//}
 		}
 
 		//Debug.Log("wS: " + wasInsideSkin.ToString() + ", iS: " + isInsideSkin.ToString()+", wV: " + wasInsideVein.ToString() + ", iV: " + isInsideVein.ToString());
@@ -242,7 +242,7 @@ public class SyringeController : MonoBehaviour
         }
 		if (isInsideSkin && !wasInsideSkin&&!isInsideVein) {
 			OnEnterSkin();
-			//Debug.Log("EnteredSkin!");
+			Debug.Log("EnteredSkin!");
 		}
 		
 	
@@ -356,8 +356,16 @@ public class SyringeController : MonoBehaviour
 			setVeinHaptic = true;
 			blocker.GetComponentInChildren<cylinderHaptic>().setVeinHapticParameter();
 		}
-		
-	}
+
+        //if (blocker)
+        //{
+        //    blocker.transform.position = transform.position;
+        //    blocker.transform.rotation = transform.rotation;
+        //    blocker.transform.position = blockerPos.transform.position;
+
+        //}
+
+    }
 
 	void OnExitSkin()
 	{

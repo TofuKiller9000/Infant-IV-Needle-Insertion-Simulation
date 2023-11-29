@@ -52,16 +52,16 @@ public class InfantHandAnimationController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.CompareTag("Gee"))
+        if(other.transform.CompareTag("Gee") )
         {
             open = true;
             cube = other.gameObject;
             print("Cube entered");
         }
-        else
-        {
-            print(other.transform.name);
-        }
+        //else
+        //{
+        //    print(other.transform.name);
+        //}
     }
 
     private void OnTriggerExit(Collider other)

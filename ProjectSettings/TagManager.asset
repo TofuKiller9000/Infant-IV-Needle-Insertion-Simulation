@@ -10,6 +10,8 @@ TagManager:
   - thumb
   - Needle
   - QuestHand
+  - Gee
+  - Finger
   layers:
   - Default
   - TransparentFX
@@ -34,7 +36,7 @@ TagManager:
   - Grabbable
   - Hand
   - glove
-  - 
+  - Controller
   - 
   - 
   - 
