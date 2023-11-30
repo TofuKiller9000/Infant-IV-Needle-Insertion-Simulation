@@ -81,7 +81,7 @@ public class VeinRoll : MonoBehaviour
         {
             contact = true;
             ResetTimer();
-            print("Collision Entered for Vein Roll");
+            //print("Collision Entered for Vein Roll");
         }
 
     }

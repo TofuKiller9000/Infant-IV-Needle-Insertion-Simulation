@@ -56,7 +56,7 @@ public class InfantHandAnimationController : MonoBehaviour
         {
             open = true;
             cube = other.gameObject;
-            print("Cube entered");
+            //print("Cube entered");
         }
         //else
         //{
@@ -72,7 +72,7 @@ public class InfantHandAnimationController : MonoBehaviour
             cube = null;
             distance = 0;
             inverse = 1; 
-            print("Cube Exited");
+            //print("Cube Exited");
         }
     }
 }

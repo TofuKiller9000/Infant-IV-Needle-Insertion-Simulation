@@ -188,10 +188,10 @@ public class SyringeController : MonoBehaviour
 
 	public void UpdateNeedleStatus()
 	{
-		// Cast ray from top of needle to near the tip, and try to detect skin/vein
-		//Vector3 startPos = transform.position + transform.up * 0.05f;\
-		Vector3 startPos = needlePoint.transform.position; 
-		RaycastHit[] hits = Physics.RaycastAll(startPos, -transform.up, 0.049f);
+        // Cast ray from top of needle to near the tip, and try to detect skin/vein
+        //Vector3 startPos = transform.position + transform.up * 0.05f;\ //0.049f
+        Vector3 startPos = needlePoint.transform.position; 
+		RaycastHit[] hits = Physics.RaycastAll(startPos, -transform.up, 0.009f);
 		Vector3 testV = -transform.up;
 		Debug.DrawRay(startPos, testV, Color.red,0.049f);
 		testV.x *= 0.045f;
@@ -210,7 +210,7 @@ public class SyringeController : MonoBehaviour
 			if (hit.transform.gameObject.layer == veinMask) 
 			{
 				//print(hit.transform.gameObject.name);
-				Debug.DrawLine(startPos, hit.point, Color.green);
+				//Debug.DrawLine(startPos, hit.point, Color.green);
 				veinCheck = true;
 				isInsideVein = true;
 				print("Is Inside vein");
@@ -219,11 +219,11 @@ public class SyringeController : MonoBehaviour
 			}
 			else if (hit.transform.gameObject.layer == armMask/* || hit.transform.gameObject.name == mol.GetComponent<methodOfLimit>().refName */) {
                 //print(hit.transform.gameObject.name);
-                Debug.DrawLine(startPos, hit.point, Color.cyan);
+                //Debug.DrawLine(startPos, hit.point, Color.cyan);
 				skinCheck = true;
 
 				lastSkinHit = hit;
-				Debug.DrawLine(hit.point, new Vector3(hit.point.x + hit.normal.x, hit.point.y + hit.normal.y, hit.point.z + hit.normal.z ), Color.blue);
+				//Debug.DrawLine(hit.point, new Vector3(hit.point.x + hit.normal.x, hit.point.y + hit.normal.y, hit.point.z + hit.normal.z ), Color.blue);
 			}
 			//else
 			//{
@@ -242,7 +242,7 @@ public class SyringeController : MonoBehaviour
         }
 		if (isInsideSkin && !wasInsideSkin&&!isInsideVein) {
 			OnEnterSkin();
-			Debug.Log("EnteredSkin!");
+			//Debug.Log("EnteredSkin!");
 		}
 		
 	
