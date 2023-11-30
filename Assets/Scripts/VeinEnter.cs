@@ -19,16 +19,22 @@ public class VeinEnter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Other: " +  other.gameObject.name);
-        VM.VeinEntered();
-        print("Vein entered");
+        if ((other.transform.tag == "Needle"))
+        {
+            VM.VeinEntered();
+            print("Vein entered");
+        }
+        //print("Other: " +  other.gameObject.name);
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        print("Other: " + other.gameObject.name);
-        VM.VeinLeft();
-        print("Vein left");
+        if ((other.transform.tag == "Needle"))
+        {
+            VM.VeinLeft();
+            print("Vein left");
+        }
     }
 
 }

@@ -191,7 +191,7 @@ public class SyringeController : MonoBehaviour
         // Cast ray from top of needle to near the tip, and try to detect skin/vein
         //Vector3 startPos = transform.position + transform.up * 0.05f;\ //0.049f
         Vector3 startPos = needlePoint.transform.position; 
-		RaycastHit[] hits = Physics.RaycastAll(startPos, -transform.up, 0.009f);
+		RaycastHit[] hits = Physics.RaycastAll(startPos, -transform.up, 0.005f);
 		Vector3 testV = -transform.up;
 		Debug.DrawRay(startPos, testV, Color.red,0.049f);
 		testV.x *= 0.045f;

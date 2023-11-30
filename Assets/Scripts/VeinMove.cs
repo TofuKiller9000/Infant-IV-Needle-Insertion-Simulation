@@ -57,7 +57,7 @@ public class VeinMove : MonoBehaviour
         if (!inserted && !roll)
         {
             timeLeft -= Time.deltaTime;
-            if(timeLeft < 0)
+            if(timeLeft <= 0)
             {
                 if (Arm.GetBlendShapeWeight(1) > 0 || Arm.GetBlendShapeWeight(2) > 0)
                 {
@@ -170,7 +170,7 @@ public class VeinMove : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if((other.transform.tag == "Needle" || other.transform.tag == "Index") && !bulge)
+        if((other.transform.tag == "Needle" || other.transform.tag == "Index"))
         {
             roll = false;
             veinRollingText.text = "Vein Rolling: False";
